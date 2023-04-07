@@ -1,0 +1,8 @@
+version: '3.6'
+services:
+  mongodb:
+    image: 'mongo:4.2.3-bionic'
+    container_name: mongodb
+    restart: always
+    ports:
+      - '27017:27017'
