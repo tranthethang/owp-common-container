@@ -1,0 +1,2 @@
+default user:
+guest / guest

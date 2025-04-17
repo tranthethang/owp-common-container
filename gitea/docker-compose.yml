@@ -1,0 +1,19 @@
+services:
+  gitea:
+    image: gitea/gitea:latest
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=sqlite3  # Dùng SQLite cho đơn giản
+      - GITEA__server__DOMAIN=localhost
+      - GITEA__server__ROOT_URL=http://localhost:3000/
+    ports:
+      - "3000:3000"  # Gitea UI
+      - "2233:22"     # SSH cho Git
+    volumes:
+      - gitea_data:/data
+    restart: unless-stopped
+
+volumes:
+  gitea_data:
