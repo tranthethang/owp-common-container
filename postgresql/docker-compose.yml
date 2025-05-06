@@ -14,4 +14,4 @@ services:
     container_name: postgres_adminer
     restart: always
     ports:
-      - 8088:8080
+      - 8888:8080
