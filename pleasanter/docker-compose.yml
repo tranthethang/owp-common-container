@@ -14,6 +14,8 @@ services:
   pleasanter:
     container_name: pleasanter
     image: implem/pleasanter
+    ports:
+      - "50001:8080"    
     depends_on:
       - db
     environment:
