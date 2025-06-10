@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   mongodb:
-    image: 'mongo:4.2.3-bionic'
+    image: 'mongo:latest'
     container_name: mongodb
     restart: always
     ports:
