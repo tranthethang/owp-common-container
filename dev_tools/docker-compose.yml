@@ -1,82 +1,140 @@
+version: '3.8'
+
 services:
     postgres:
-        image: postgres:latest
+        container_name: dev_postgres
+        image: postgres:15
         restart: always
         environment:
+            POSTGRES_USER: '${DB_USER:-postgres}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-changeme}'
+            POSTGRES_DB: '${DB_NAME:-postgres}'
         ports:
-            - '${FORWARD_DB_PORT:-5432}:5432'
+            - '127.0.0.1:${FORWARD_DB_PORT:-5432}:5432'
         networks:
             - dev_tools
         volumes:
             - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
     adminer:
-        image: adminer:latest
+        container_name: dev_adminer
+        image: adminer:4.8.1
         restart: always
         ports:
-            - '${FORWARD_ADMINER_PORT:-8048}:8080'
+            - '127.0.0.1:${FORWARD_ADMINER_PORT:-8048}:8080'
         networks:
             - dev_tools
+        depends_on:
+            postgres:
+                condition: service_healthy
+            mysql8:
+                condition: service_healthy
 
     mailhog:
-        image: mailhog/mailhog:latest
+        container_name: dev_mailhog
+        image: mailhog/mailhog:v1.0.1
         restart: always
         ports:
-            - '${FORWARD_MAILHOG_WEB_PORT:-8025}:8025'
-            - '${FORWARD_MAILHOG_SMTP_PORT:-1025}:1025'
+            - '127.0.0.1:${FORWARD_MAILHOG_WEB_PORT:-8025}:8025'
+            - '127.0.0.1:${FORWARD_MAILHOG_SMTP_PORT:-1025}:1025'
         networks:
             - dev_tools
 
     mysql8:
-        image: 'mysql:8'
+        container_name: dev_mysql8
+        image: 'mysql:8.0'
         restart: always
         command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         environment:
-            MYSQL_DATABASE: cloud 
-            MYSQL_USER: uid
-            MYSQL_PASSWORD: pwd
-            MYSQL_ROOT_PASSWORD: secret
-            TZ: Asia/Ho_Chi_Minh
+            MYSQL_DATABASE: '${MYSQL_DATABASE:-cloud}'
+            MYSQL_USER: '${MYSQL_USER:-uid}'
+            MYSQL_PASSWORD: '${MYSQL_PASSWORD:-pwd}'
+            MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD:-secret}'
+            TZ: '${TZ:-Asia/Ho_Chi_Minh}'
         ports:
-            - '${FORWARD_MYSQL_PORT:-3306}:3306'
+            - '127.0.0.1:${FORWARD_MYSQL_PORT:-3306}:3306'
         networks:
             - dev_tools
+        volumes:
+            - mysql_data:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
     memcached:
-        image: memcached:latest
+        container_name: dev_memcached
+        image: memcached:1.6
         restart: always
         ports:
-            - '${FORWARD_MEMCACHED_PORT:-11211}:11211'
+            - '127.0.0.1:${FORWARD_MEMCACHED_PORT:-11211}:11211'
         networks:
             - dev_tools
 
     mongodb:
-        image: 'mongo:latest'
-        restart: always
-        ports:
-            - '${FORWARD_MONGO_PORT:-27017}:27017'
-        networks:
-            - dev_tools
-
-    rabbitmq:
-        image: 'rabbitmq:4.1-management-alpine'
-        restart: always
-        ports:
-            - '${FORWARD_RABBITMQ_PORT:-5672}:5672'
-            - '${FORWARD_RABBITMQ_WEB_PORT:-15672}:15672'
-        networks:
-            - dev_tools
-
-    redis:
-        image: 'bitnami/redis:latest'
+        container_name: dev_mongodb
+        image: 'mongo:6.0'
         restart: always
         environment:
-            - ALLOW_EMPTY_PASSWORD=yes
+            MONGO_INITDB_ROOT_USERNAME: '${MONGO_ROOT_USER:-root}'
+            MONGO_INITDB_ROOT_PASSWORD: '${MONGO_ROOT_PASSWORD:-example}'
         ports:
-            - '${FORWARD_REDIS_PORT:-6379}:6379'
+            - '127.0.0.1:${FORWARD_MONGO_PORT:-27017}:27017'
         networks:
             - dev_tools
+        volumes:
+            - mongodb_data:/data/db
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    rabbitmq:
+        container_name: dev_rabbitmq
+        image: 'rabbitmq:3.11-management-alpine'
+        restart: always
+        environment:
+            RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER:-guest}'
+            RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD:-guest}'
+        ports:
+            - '127.0.0.1:${FORWARD_RABBITMQ_PORT:-5672}:5672'
+            - '127.0.0.1:${FORWARD_RABBITMQ_WEB_PORT:-15672}:15672'
+        networks:
+            - dev_tools
+        volumes:
+            - rabbitmq_data:/var/lib/rabbitmq
+        healthcheck:
+            test: ["CMD", "rabbitmq-diagnostics", "check_running"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    redis:
+        container_name: dev_redis
+        image: 'redis:7.0-alpine'
+        restart: always
+        environment:
+            - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+        command: >
+            --requirepass ${REDIS_PASSWORD:-changeme}
+        ports:
+            - '127.0.0.1:${FORWARD_REDIS_PORT:-6379}:6379'
+        networks:
+            - dev_tools
+        volumes:
+            - redis_data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
 
 networks:
     dev_tools:
@@ -85,3 +143,7 @@ networks:
 
 volumes:
     postgres_data:
+    mysql_data:
+    mongodb_data:
+    rabbitmq_data:
+    redis_data:
