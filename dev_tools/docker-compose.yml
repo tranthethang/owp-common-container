@@ -1,16 +1,14 @@
-version: '3.8'
-
 services:
     postgres:
         container_name: dev_postgres
         image: postgres:15
         restart: always
         environment:
-            POSTGRES_USER: '${DB_USER:-postgres}'
-            POSTGRES_PASSWORD: '${DB_PASSWORD:-changeme}'
-            POSTGRES_DB: '${DB_NAME:-postgres}'
+            POSTGRES_USER: '${POSTGRES_USER:-postgres}'
+            POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-changeme}'
+            POSTGRES_DB: '${POSTGRES_DB:-sonarqube}'
         ports:
-            - '127.0.0.1:${FORWARD_DB_PORT:-5432}:5432'
+            - '127.0.0.1:${POSTGRES_PORT:-5432}:5432'
         networks:
             - dev_tools
         volumes:
@@ -26,7 +24,7 @@ services:
         image: adminer:4.8.1
         restart: always
         ports:
-            - '127.0.0.1:${FORWARD_ADMINER_PORT:-8048}:8080'
+            - '127.0.0.1:${ADMINER_PORT:-8048}:8080'
         networks:
             - dev_tools
         depends_on:
@@ -40,8 +38,8 @@ services:
         image: mailhog/mailhog:v1.0.1
         restart: always
         ports:
-            - '127.0.0.1:${FORWARD_MAILHOG_WEB_PORT:-8025}:8025'
-            - '127.0.0.1:${FORWARD_MAILHOG_SMTP_PORT:-1025}:1025'
+            - '127.0.0.1:${MAILHOG_WEB_PORT:-8025}:8025'
+            - '127.0.0.1:${MAILHOG_SMTP_PORT:-1025}:1025'
         networks:
             - dev_tools
 
@@ -57,7 +55,7 @@ services:
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD:-secret}'
             TZ: '${TZ:-Asia/Ho_Chi_Minh}'
         ports:
-            - '127.0.0.1:${FORWARD_MYSQL_PORT:-3306}:3306'
+            - '127.0.0.1:${MYSQL_PORT:-3306}:3306'
         networks:
             - dev_tools
         volumes:
@@ -73,7 +71,7 @@ services:
         image: memcached:1.6
         restart: always
         ports:
-            - '127.0.0.1:${FORWARD_MEMCACHED_PORT:-11211}:11211'
+            - '127.0.0.1:${MEMCACHED_PORT:-11211}:11211'
         networks:
             - dev_tools
 
@@ -85,7 +83,7 @@ services:
             MONGO_INITDB_ROOT_USERNAME: '${MONGO_ROOT_USER:-root}'
             MONGO_INITDB_ROOT_PASSWORD: '${MONGO_ROOT_PASSWORD:-example}'
         ports:
-            - '127.0.0.1:${FORWARD_MONGO_PORT:-27017}:27017'
+            - '127.0.0.1:${MONGO_PORT:-27017}:27017'
         networks:
             - dev_tools
         volumes:
@@ -104,8 +102,8 @@ services:
             RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER:-guest}'
             RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD:-guest}'
         ports:
-            - '127.0.0.1:${FORWARD_RABBITMQ_PORT:-5672}:5672'
-            - '127.0.0.1:${FORWARD_RABBITMQ_WEB_PORT:-15672}:15672'
+            - '127.0.0.1:${RABBITMQ_PORT:-5672}:5672'
+            - '127.0.0.1:${RABBITMQ_WEB_PORT:-15672}:15672'
         networks:
             - dev_tools
         volumes:
@@ -125,7 +123,7 @@ services:
         command: >
             --requirepass ${REDIS_PASSWORD:-changeme}
         ports:
-            - '127.0.0.1:${FORWARD_REDIS_PORT:-6379}:6379'
+            - '127.0.0.1:${REDIS_PORT:-6379}:6379'
         networks:
             - dev_tools
         volumes:
@@ -135,6 +133,34 @@ services:
             interval: 10s
             timeout: 5s
             retries: 5
+
+    sonarqube:
+        container_name: dev_sonarqube
+        image: sonarqube:lts-community
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            SONAR_JDBC_URL: jdbc:postgresql://postgres:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-sonarqube}
+            SONAR_JDBC_USERNAME: '${POSTGRES_USER:-postgres}'
+            SONAR_JDBC_PASSWORD: '${POSTGRES_PASSWORD:-changeme}'
+        restart: always
+        ports:
+            - '127.0.0.1:${SONARQUBE_PORT:-9000}:9000'
+        networks:
+            - dev_tools
+        volumes:
+            - sonarqube_conf:/opt/sonarqube/conf
+            - sonarqube_data:/opt/sonarqube/data
+            - sonarqube_extensions:/opt/sonarqube/extensions
+            - sonarqube_logs:/opt/sonarqube/logs
+            - sonarqube_temp:/opt/sonarqube/temp
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:9000/api/system/status"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 60s
 
 networks:
     dev_tools:
@@ -147,3 +173,8 @@ volumes:
     mongodb_data:
     rabbitmq_data:
     redis_data:
+    sonarqube_conf:
+    sonarqube_data:
+    sonarqube_extensions:
+    sonarqube_logs:
+    sonarqube_temp:
