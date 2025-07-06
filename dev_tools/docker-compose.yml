@@ -2,7 +2,7 @@ services:
     postgres:
         container_name: dev_postgres
         image: postgres:15
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         environment:
             POSTGRES_USER: '${POSTGRES_USER:-postgres}'
             POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-changeme}'
@@ -22,7 +22,7 @@ services:
     adminer:
         container_name: dev_adminer
         image: adminer:4.8.1
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         ports:
             - '127.0.0.1:${ADMINER_PORT:-8048}:8080'
         networks:
@@ -36,7 +36,7 @@ services:
     mailhog:
         container_name: dev_mailhog
         image: mailhog/mailhog:v1.0.1
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         ports:
             - '127.0.0.1:${MAILHOG_WEB_PORT:-8025}:8025'
             - '127.0.0.1:${MAILHOG_SMTP_PORT:-1025}:1025'
@@ -46,7 +46,7 @@ services:
     mysql8:
         container_name: dev_mysql8
         image: 'mysql:8.0'
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         environment:
             MYSQL_DATABASE: '${MYSQL_DATABASE:-cloud}'
@@ -69,7 +69,7 @@ services:
     memcached:
         container_name: dev_memcached
         image: memcached:1.6
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         ports:
             - '127.0.0.1:${MEMCACHED_PORT:-11211}:11211'
         networks:
@@ -78,7 +78,7 @@ services:
     mongodb:
         container_name: dev_mongodb
         image: 'mongo:6.0'
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         environment:
             MONGO_INITDB_ROOT_USERNAME: '${MONGO_ROOT_USER:-root}'
             MONGO_INITDB_ROOT_PASSWORD: '${MONGO_ROOT_PASSWORD:-example}'
@@ -97,7 +97,7 @@ services:
     rabbitmq:
         container_name: dev_rabbitmq
         image: 'rabbitmq:3.11-management-alpine'
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         environment:
             RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER:-guest}'
             RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD:-guest}'
@@ -117,7 +117,7 @@ services:
     redis:
         container_name: dev_redis
         image: 'redis:7.0-alpine'
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         environment:
             - REDIS_PASSWORD=${REDIS_PASSWORD:-}
         command: >
@@ -144,7 +144,7 @@ services:
             SONAR_JDBC_URL: jdbc:postgresql://postgres:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-sonarqube}
             SONAR_JDBC_USERNAME: '${POSTGRES_USER:-postgres}'
             SONAR_JDBC_PASSWORD: '${POSTGRES_PASSWORD:-changeme}'
-        restart: always
+        restart: '${RESTART_POLICY:-always}'
         ports:
             - '127.0.0.1:${SONARQUBE_PORT:-9000}:9000'
         networks:
