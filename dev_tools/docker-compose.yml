@@ -33,13 +33,13 @@ services:
             mysql8:
                 condition: service_healthy
 
-    mailhog:
-        container_name: dev_mailhog
-        image: mailhog/mailhog:v1.0.1
+    mailpit:
+        container_name: dev_mailpit
+        image: axllent/mailpit:latest
         restart: '${RESTART_POLICY:-always}'
         ports:
-            - '127.0.0.1:${MAILHOG_WEB_PORT:-8025}:8025'
-            - '127.0.0.1:${MAILHOG_SMTP_PORT:-1025}:1025'
+            - '127.0.0.1:${MAILPIT_WEB_PORT:-8025}:8025'
+            - '127.0.0.1:${MAILPIT_SMTP_PORT:-1025}:1025'
         networks:
             - dev_tools
 
