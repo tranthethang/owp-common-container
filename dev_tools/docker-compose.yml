@@ -10,6 +10,7 @@ services:
             - MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
             - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-password102}
             - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS:-my-bucket}
+            - MINIO_BROWSER=${MINIO_BROWSER:-on} 
         volumes:
             - minio_data:/bitnami/minio/data
         restart: '${RESTART_POLICY:-always}'
@@ -181,7 +182,7 @@ services:
             SONAR_JDBC_PASSWORD: '${POSTGRES_PASSWORD:-changeme}'
         restart: '${RESTART_POLICY:-always}'
         ports:
-            - '${SONARQUBE_PORT:-9000}:9000'
+            - '${SONARQUBE_PORT:-9090}:9000'
         networks:
             - dev_tools
         volumes:
