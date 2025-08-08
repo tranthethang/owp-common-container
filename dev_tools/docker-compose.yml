@@ -1,5 +1,27 @@
 services:
 
+    minio:
+        container_name: dev_minio
+        image: bitnami/minio:latest
+        ports:
+            - '${MINIO_API_PORT:-9009}:9000'
+            - '${MINIO_CONSOLE_PORT:-9001}:9001'
+        environment:
+            - MINIO_ROOT_USER=${MINIO_ROOT_USER:-admin}
+            - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-password102}
+            - MINIO_DEFAULT_BUCKETS=${MINIO_DEFAULT_BUCKETS:-my-bucket}
+        volumes:
+            - minio_data:/bitnami/minio/data
+        restart: '${RESTART_POLICY:-always}'
+        networks:
+            - dev_tools
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 20s
+
     portainer:
         image: portainer/portainer-ce:latest
         container_name: dev_portainer
@@ -192,3 +214,4 @@ volumes:
     sonarqube_logs:
     sonarqube_temp:
     portainer_data:
+    minio_data:
