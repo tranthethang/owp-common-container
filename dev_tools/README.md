@@ -38,10 +38,60 @@ This Docker Compose setup provides a comprehensive development environment with 
    docker-compose up -d
    ```
 
-4. **Check service status**
+4. **Or start specific service groups using profiles**
+   ```bash
+   # Start only database services
+   docker-compose --profile database up -d
+   
+   # Start only cache services  
+   docker-compose --profile cache up -d
+   
+   # Start specific service
+   docker-compose --profile postgres up -d
+   ```
+
+5. **Check service status**
    ```bash
    docker-compose ps
    ```
+
+## Service Profiles
+
+Services are organized into profiles for selective deployment:
+
+### Category Profiles
+- **`database`** - All database services (postgres, mysql8, mongodb, adminer)
+- **`cache`** - Caching services (redis, memcached)
+- **`storage`** - Storage services (minio)
+- **`messaging`** - Message queue services (rabbitmq)
+- **`mail`** - Email testing services (mailpit)
+- **`analysis`** - Code analysis services (sonarqube)
+- **`management`** - Container management services (portainer)
+- **`all`** - All services (default when no profile specified)
+
+### Individual Service Profiles
+Each service has its own profile for granular control:
+- `minio`, `portainer`, `postgres`, `adminer`, `mailpit`, `mysql`, `memcached`, `mongodb`, `rabbitmq`, `redis`, `sonarqube`
+
+### Profile Usage Examples
+```bash
+# Start only databases and their management tools
+docker-compose --profile database up -d
+
+# Start cache services only
+docker-compose --profile cache up -d
+
+# Start multiple profiles
+docker-compose --profile database --profile cache up -d
+
+# Start specific services
+docker-compose --profile postgres --profile redis up -d
+
+# Start all services (same as no profile)
+docker-compose --profile all up -d
+# or simply
+docker-compose up -d
+```
 
 ## Configuration
 
@@ -140,8 +190,13 @@ The following volumes are created for data persistence:
 # Start all services
 docker-compose up -d
 
+# Start services by profile
+docker-compose --profile database up -d
+docker-compose --profile cache up -d
+docker-compose --profile messaging up -d
+
 # Start specific service
-docker-compose up -d postgres
+docker-compose --profile postgres up -d
 
 # Start with logs
 docker-compose up

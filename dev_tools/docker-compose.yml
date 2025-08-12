@@ -3,6 +3,7 @@ services:
     minio:
         container_name: dev_minio
         image: bitnami/minio:latest
+        profiles: ["storage", "minio", "all"]
         ports:
             - '${MINIO_API_PORT:-9009}:9000'
             - '${MINIO_CONSOLE_PORT:-9001}:9001'
@@ -26,6 +27,7 @@ services:
     portainer:
         image: portainer/portainer-ce:latest
         container_name: dev_portainer
+        profiles: ["management", "portainer", "all"]
         ports:
             - '${PORTAINER_PORT:-9443}:9443'
         volumes:
@@ -38,6 +40,7 @@ services:
     postgres:
         container_name: dev_postgres
         image: postgres:15
+        profiles: ["database", "postgres", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
             POSTGRES_USER: '${POSTGRES_USER:-postgres}'
@@ -58,6 +61,7 @@ services:
     adminer:
         container_name: dev_adminer
         image: adminer:4.8.1
+        profiles: ["database", "adminer", "all"]
         restart: '${RESTART_POLICY:-always}'
         ports:
             - '${ADMINER_PORT:-8048}:8080'
@@ -72,6 +76,7 @@ services:
     mailpit:
         container_name: dev_mailpit
         image: axllent/mailpit:latest
+        profiles: ["mail", "mailpit", "all"]
         restart: '${RESTART_POLICY:-always}'
         ports:
             - '${MAILPIT_WEB_PORT:-8025}:8025'
@@ -82,6 +87,7 @@ services:
     mysql8:
         container_name: dev_mysql8
         image: 'mysql:8.0'
+        profiles: ["database", "mysql", "all"]
         restart: '${RESTART_POLICY:-always}'
         command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         environment:
@@ -105,6 +111,7 @@ services:
     memcached:
         container_name: dev_memcached
         image: memcached:1.6
+        profiles: ["cache", "memcached", "all"]
         restart: '${RESTART_POLICY:-always}'
         ports:
             - '${MEMCACHED_PORT:-11211}:11211'
@@ -114,6 +121,7 @@ services:
     mongodb:
         container_name: dev_mongodb
         image: 'mongo:6.0'
+        profiles: ["database", "mongodb", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
             MONGO_INITDB_ROOT_USERNAME: '${MONGO_ROOT_USER:-root}'
@@ -133,6 +141,7 @@ services:
     rabbitmq:
         container_name: dev_rabbitmq
         image: 'rabbitmq:3.11-management-alpine'
+        profiles: ["messaging", "rabbitmq", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
             RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER:-guest}'
@@ -153,6 +162,7 @@ services:
     redis:
         container_name: dev_redis
         image: 'redis:7.0-alpine'
+        profiles: ["cache", "redis", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
             - REDIS_PASSWORD=${REDIS_PASSWORD:-}
@@ -173,6 +183,7 @@ services:
     sonarqube:
         container_name: dev_sonarqube
         image: sonarqube:lts-community
+        profiles: ["analysis", "sonarqube", "all"]
         depends_on:
             postgres:
                 condition: service_healthy
