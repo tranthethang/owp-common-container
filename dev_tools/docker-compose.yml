@@ -180,6 +180,21 @@ services:
             timeout: 5s
             retries: 5
 
+    redis-insight:
+        container_name: dev_redis-insight
+        image: redis/redisinsight:latest
+        profiles: ["cache", "redis", "all"]
+        restart: '${RESTART_POLICY:-always}'
+        ports:
+            - '${REDIS_INSIGHT_PORT:-8001}:8001'
+        networks:
+            - dev_tools
+        volumes:
+            - redis-insight_data:/data
+        depends_on:
+            redis:
+                condition: service_healthy
+
     sonarqube:
         container_name: dev_sonarqube
         image: sonarqube:lts-community
@@ -220,6 +235,7 @@ volumes:
     mongodb_data:
     rabbitmq_data:
     redis_data:
+    redis-insight_data:
     sonarqube_conf:
     sonarqube_data:
     sonarqube_extensions:
