@@ -39,7 +39,7 @@ services:
             
     postgres:
         container_name: dev_postgres
-        image: postgres:15
+        image: pgvector/pgvector:pg15
         profiles: ["database", "postgres", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
