@@ -186,7 +186,7 @@ services:
         profiles: ["cache", "redis", "all"]
         restart: '${RESTART_POLICY:-always}'
         ports:
-            - '${REDIS_INSIGHT_PORT:-8001}:8001'
+            - '${REDIS_INSIGHT_PORT:-5540}:5540'
         networks:
             - dev_tools
         volumes:
