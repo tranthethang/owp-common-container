@@ -72,6 +72,8 @@ services:
                 condition: service_healthy
             mysql8:
                 condition: service_healthy
+        volumes:
+            - ./adminer.css:/var/www/html/adminer.css:ro
 
     mailpit:
         container_name: dev_mailpit
