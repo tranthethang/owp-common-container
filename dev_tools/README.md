@@ -5,21 +5,22 @@ This Docker Compose setup provides a comprehensive development environment with 
 ## Services Included
 
 ### Databases
-- **PostgreSQL 15** - Primary relational database
-- **MySQL 8.0** - Alternative relational database
-- **MongoDB 6.0** - NoSQL document database
+- **PostgreSQL 17 (pgvector)** - Primary relational database with vector search extension
+- **MySQL 8.4** - Alternative relational database
+- **MongoDB 8.0** - NoSQL document database
 
 ### Caching & Memory
-- **Redis 7.0** - In-memory data structure store
-- **Memcached 1.6** - Distributed memory caching system
+- **Redis 7** - In-memory data structure store (alpine variant)
+- **Memcached 1.6** - Distributed memory caching system (alpine variant)
 
 ### Message Queue
-- **RabbitMQ 3.11** - Message broker with management interface
+- **RabbitMQ 3.13** - Message broker with management interface (management-alpine)
 
 ### Development Tools
-- **Adminer 4.8.1** - Database management tool
+- **Adminer 5** - Database management tool
 - **Mailpit** - Modern email testing tool with advanced features
 - **SonarQube LTS** - Code quality and security analysis
+- **Portainer CE LTS** - Container management UI
 
 ## Quick Start
 
@@ -35,24 +36,24 @@ This Docker Compose setup provides a comprehensive development environment with 
 
 3. **Start all services**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 4. **Or start specific service groups using profiles**
    ```bash
    # Start only database services
-   docker-compose --profile database up -d
+   docker compose --profile database up -d
    
    # Start only cache services  
-   docker-compose --profile cache up -d
+   docker compose --profile cache up -d
    
    # Start specific service
-   docker-compose --profile postgres up -d
+   docker compose --profile management up -d
    ```
 
 5. **Check service status**
    ```bash
-   docker-compose ps
+   docker compose ps
    ```
 
 ## Service Profiles
@@ -76,21 +77,21 @@ Each service has its own profile for granular control:
 ### Profile Usage Examples
 ```bash
 # Start only databases and their management tools
-docker-compose --profile database up -d
+docker compose --profile database up -d
 
 # Start cache services only
-docker-compose --profile cache up -d
+docker compose --profile cache up -d
 
 # Start multiple profiles
-docker-compose --profile database --profile cache up -d
+docker compose --profile database --profile cache up -d
 
 # Start specific services
-docker-compose --profile postgres --profile redis up -d
+docker compose --profile postgres --profile redis up -d
 
 # Start all services (same as no profile)
-docker-compose --profile all up -d
+docker compose --profile all up -d
 # or simply
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Configuration
@@ -137,7 +138,15 @@ Copy `.env.example` to `.env` and customize the following variables:
 - `MAILPIT_WEB_PORT` - Mailpit web interface port (default: `8025`)
 - `MAILPIT_SMTP_PORT` - Mailpit SMTP port (default: `1025`)
 - `MEMCACHED_PORT` - Memcached port (default: `11211`)
-- `SONARQUBE_PORT` - SonarQube web interface port (default: `9000`)
+- `SONARQUBE_PORT` - SonarQube web interface port (default: `9090`)
+
+#### MinIO
+- `MINIO_API_PORT` - MinIO API port (default: `9009`)
+- `MINIO_CONSOLE_PORT` - MinIO Console port (default: `9001`)
+- `MINIO_ROOT_USER` - MinIO root user (default: `admin`)
+- `MINIO_ROOT_PASSWORD` - MinIO root password (default: `password102`)
+- `MINIO_DEFAULT_BUCKETS` - Comma-separated list of default buckets (default: `my-bucket`)
+- `MINIO_BROWSER` - Enable/disable built-in browser (default: `on`)
 
 ## Service Access
 
@@ -145,7 +154,9 @@ Copy `.env.example` to `.env` and customize the following variables:
 - **Adminer**: http://localhost:8048 - Database management
 - **RabbitMQ Management**: http://localhost:15672 - Message queue management
 - **Mailpit**: http://localhost:8025 - Email testing interface
-- **SonarQube**: http://localhost:9000 - Code quality analysis
+- **MinIO Console**: http://localhost:9001 - Object storage UI
+- **Portainer**: https://localhost:9443 - Container management UI
+- **SonarQube**: http://localhost:9090 - Code quality analysis
   - Default credentials: `admin/admin`
   - ⚠️ **Important**: Change the default password after first login
 
@@ -188,53 +199,53 @@ The following volumes are created for data persistence:
 ### Start services
 ```bash
 # Start all services
-docker-compose up -d
+docker compose up -d
 
 # Start services by profile
-docker-compose --profile database up -d
-docker-compose --profile cache up -d
-docker-compose --profile messaging up -d
+docker compose --profile database up -d
+docker compose --profile cache up -d
+docker compose --profile messaging up -d
 
 # Start specific service
-docker-compose --profile postgres up -d
+docker compose --profile postgres up -d
 
 # Start with logs
-docker-compose up
+docker compose up
 ```
 
 ### Stop services
 ```bash
 # Stop all services
-docker-compose down
+docker compose down
 
 # Stop and remove volumes (⚠️ This will delete all data)
-docker-compose down -v
+docker compose down -v
 ```
 
 ### View logs
 ```bash
 # View all logs
-docker-compose logs
+docker compose logs
 
 # View specific service logs
-docker-compose logs postgres
+docker compose logs postgres
 
 # Follow logs
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ### Service management
 ```bash
 # Restart a service
-docker-compose restart postgres
+docker compose restart postgres
 
 # Check service status
-docker-compose ps
+docker compose ps
 
 # Execute commands in containers
-docker-compose exec postgres psql -U postgres
-docker-compose exec mysql8 mysql -u root -p
-docker-compose exec mongodb mongosh
+docker compose exec postgres psql -U postgres
+docker compose exec mysql8 mysql -u root -p
+docker compose exec mongodb mongosh
 ```
 
 ## Networking
@@ -249,7 +260,7 @@ Example connection strings from within containers:
 
 ### Connecting External Services
 
-To connect your application containers to the dev_tools network and access these services, add the following configuration to your `docker-compose.yml`:
+To connect your application containers to the dev_tools network and access these services, add the following configuration to your `docker compose.yml`:
 
 ```yaml
 services:
@@ -289,20 +300,20 @@ Once connected, your application can access services using their container names
    - Increase Docker memory limits if needed
 
 4. **Service won't start**
-   - Check logs: `docker-compose logs SERVICE_NAME`
+   - Check logs: `docker compose logs SERVICE_NAME`
    - Verify environment variables in `.env`
    - Check health check status
 
 ### Reset Everything
 ```bash
 # Stop all services and remove volumes
-docker-compose down -v
+docker compose down -v
 
 # Remove all images (optional)
-docker-compose down --rmi all
+docker compose down --rmi all
 
 # Start fresh
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Security Notes
@@ -319,7 +330,7 @@ docker-compose up -d
 - Docker Engine 20.10+
 - Docker Compose 2.0+
 - At least 4GB RAM (recommended 8GB for SonarQube)
-- Available ports: 5432, 3306, 27017, 6379, 11211, 5672, 15672, 8048, 8025, 1025, 9000
+- Available ports: 5432, 3306, 27017, 6379, 11211, 5672, 15672, 8048, 8025, 1025, 9090, 9009, 9001, 9443
 
 ## Contributing
 

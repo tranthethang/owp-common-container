@@ -25,7 +25,7 @@ services:
             start_period: 20s
 
     portainer:
-        image: portainer/portainer-ce:latest
+        image: portainer/portainer-ce:lts
         container_name: dev_portainer
         profiles: ["management", "portainer", "all"]
         ports:
@@ -39,7 +39,7 @@ services:
             
     postgres:
         container_name: dev_postgres
-        image: pgvector/pgvector:pg15
+        image: pgvector/pgvector:pg17
         profiles: ["database", "postgres", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
@@ -60,7 +60,7 @@ services:
 
     adminer:
         container_name: dev_adminer
-        image: adminer:4.8.1
+        image: adminer:5
         profiles: ["database", "adminer", "all"]
         restart: '${RESTART_POLICY:-always}'
         ports:
@@ -110,7 +110,7 @@ services:
 
     memcached:
         container_name: dev_memcached
-        image: memcached:1.6
+        image: memcached:1.6-alpine
         profiles: ["cache", "memcached", "all"]
         restart: '${RESTART_POLICY:-always}'
         ports:
@@ -120,7 +120,7 @@ services:
 
     mongodb:
         container_name: dev_mongodb
-        image: 'mongo:6.0'
+        image: 'mongo:8.0'
         profiles: ["database", "mongodb", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
@@ -140,7 +140,7 @@ services:
 
     rabbitmq:
         container_name: dev_rabbitmq
-        image: 'rabbitmq:3.11-management-alpine'
+        image: 'rabbitmq:3.13-management-alpine'
         profiles: ["messaging", "rabbitmq", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
@@ -161,7 +161,7 @@ services:
 
     redis:
         container_name: dev_redis
-        image: 'redis:7.0-alpine'
+        image: 'redis:7-alpine'
         profiles: ["cache", "redis", "all"]
         restart: '${RESTART_POLICY:-always}'
         environment:
@@ -179,6 +179,21 @@ services:
             interval: 10s
             timeout: 5s
             retries: 5
+
+    redisinsight:
+        container_name: dev_redisinsight
+        image: 'redis/redisinsight:latest'
+        profiles: ["cache", "redisinsight", "all"]
+        restart: '${RESTART_POLICY:-always}'
+        ports:
+            - '${REDISINSIGHT_PORT:-5540}:5540'
+        networks:
+            - dev_tools
+        volumes:
+            - redisinsight_data:/data
+        depends_on:
+            redis:
+                condition: service_healthy
 
     sonarqube:
         container_name: dev_sonarqube
@@ -227,3 +242,4 @@ volumes:
     sonarqube_temp:
     portainer_data:
     minio_data:
+    redisinsight_data:
