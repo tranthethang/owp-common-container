@@ -317,7 +317,9 @@ th {
 
 /* SQL code blocks (Adminer JUSH) */
 code.jush-sql,
-pre.jush code.jush-sql {
+code.jush-pgsql,
+pre.jush code.jush-sql,
+pre.jush code.jush-pgsql {
   display: block;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
   background: var(--bg1) !important;
@@ -333,30 +335,36 @@ pre.jush code.jush-sql {
 }
 
 /* Reset link styling inside SQL blocks */
-code.jush-sql a {
+code.jush-sql a,
+code.jush-pgsql a {
   padding: 0;
   text-decoration: none;
   background: transparent;
 }
 
 /* SQL keywords (SELECT, FROM, LIMIT...) are links (jush-help) */
-code.jush-sql a.jush-help {
+code.jush-sql a.jush-help,
+code.jush-pgsql a.jush-help {
   color: var(--keyword-color) !important;
   font-weight: 600; /* softer weight */
 }
-code.jush-sql a.jush-help:hover {
+code.jush-sql a.jush-help:hover,
+code.jush-pgsql a.jush-help:hover {
   color: color-mix(in srgb, var(--keyword-color) 70%, var(--yellow));
   text-decoration: underline;
 }
 
 /* High-specificity duplication to beat default.css if it loads after */
 html body code.jush-sql a.jush-help,
-html body pre.jush code.jush-sql a.jush-help {
+html body pre.jush code.jush-sql a.jush-help,
+html body code.jush-pgsql a.jush-help,
+html body pre.jush code.jush-pgsql a.jush-help {
   color: var(--keyword-color) !important;
 }
 
 /* Identifiers (tables, columns) */
-code.jush-sql a.jush-custom {
+code.jush-sql a.jush-custom,
+code.jush-pgsql a.jush-custom {
   color: var(--blue) !important;
   font-weight: 600;
 }
@@ -365,48 +373,59 @@ code.jush-sql a.jush-custom {
 .jush a {
   color: var(--keyword-color);
 }
-code.jush-sql a.jush-custom:hover {
+code.jush-sql a.jush-custom:hover,
+code.jush-pgsql a.jush-custom:hover {
   color: var(--aqua);
   text-decoration: underline;
 }
 
 /* Numbers */
-code.jush-sql .jush-num {
+code.jush-sql .jush-num,
+code.jush-pgsql .jush-num {
   color: var(--aqua);
 }
 
 /* Strings and quoted */
 code.jush-sql .jush-sql_quo,
 code.jush-sql .jush-sql_apo,
-code.jush-sql .jush-sql_eot {
+code.jush-sql .jush-sql_eot,
+code.jush-pgsql .jush-sql_quo,
+code.jush-pgsql .jush-sql_apo,
+code.jush-pgsql .jush-sql_eot {
   color: var(--green);
 }
 
 /* Variables */
-code.jush-sql .jush-sql_var {
+code.jush-sql .jush-sql_var,
+code.jush-pgsql .jush-sql_var {
   font-style: italic;
   color: var(--purple);
 }
 
 /* Operators and punctuation */
-code.jush-sql .jush-op {
+code.jush-sql .jush-op,
+code.jush-pgsql .jush-op {
   color: color-mix(in srgb, var(--orange) 70%, var(--fg1)) !important; /* soften operators */
 }
 
 /* Backticks around identifiers */
-code.jush-sql .jush-bac .jush-op {
+code.jush-sql .jush-bac .jush-op,
+code.jush-pgsql .jush-bac .jush-op {
   color: var(--gray);
 }
 
 /* Comments */
 code.jush-sql .jush-sql_com,
-code.jush-sql .jush-com {
+code.jush-sql .jush-com,
+code.jush-pgsql .jush-sql_com,
+code.jush-pgsql .jush-com {
   color: var(--gray);
   font-style: italic;
 }
 
 /* Wrapper */
-code.jush-sql .jush-sql_code {
+code.jush-sql .jush-sql_code,
+code.jush-pgsql .jush-sql_code {
   color: var(--fg1) !important;
 }
 
