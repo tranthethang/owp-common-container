@@ -1,0 +1,745 @@
+html {
+    --bg: #fff;
+    --fg: #000;
+    --dim: #eee;
+    --lit: #ddf;
+}
+
+body {
+    color: var(--fg);
+    background: var(--bg);
+    font: 90%/1.25 Verdana,Arial,Helvetica,sans-serif;
+    margin: 0;
+    min-width: fit-content;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:visited {
+    color: navy;
+}
+
+a:link:hover,a:visited:hover {
+    color: red;
+    text-decoration: underline;
+}
+
+a.text:hover {
+    text-decoration: none;
+}
+
+a.jush-help:hover {
+    color: inherit;
+}
+
+h1 {
+    font-size: 150%;
+    margin: 0;
+    padding: .8em .667em;
+    border-bottom: 1px solid #999;
+    font-weight: normal;
+    color: #777;
+    background: var(--dim);
+}
+
+h2 {
+    font-size: 150%;
+    margin: 0 0 20px -18px;
+    padding: .8em 1em;
+    border-bottom: 1px solid var(--fg);
+    font-weight: normal;
+    background: var(--lit);
+}
+
+h3 {
+    font-weight: normal;
+    font-size: 130%;
+    margin: 1em 0 0;
+}
+
+form {
+    margin: 0;
+}
+
+td table {
+    width: 100%;
+    margin: 0;
+}
+
+table {
+    margin: 1em 20px 0 0;
+    font-size: 90%;
+    border-spacing: 0;
+    border-width: 1px 0 0 1px;
+}
+
+table,td,th,.js .column {
+    border-color: #999;
+    border-style: solid;
+}
+
+td,th {
+    border-width: 0 1px 1px 0;
+    padding: .2em .3em;
+    margin: 0;
+}
+
+th {
+    background: var(--dim);
+    text-align: left;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+}
+
+thead th {
+    text-align: center;
+    padding: .2em .5em;
+}
+
+thead td,thead th {
+    background: var(--lit);
+}
+
+fieldset {
+    display: inline;
+    vertical-align: top;
+    padding: .5em .8em;
+    margin: .8em .5em 0 0;
+    border: 1px solid #999;
+    border-radius: 5px;
+}
+
+p {
+    margin: .8em 20px 0 0;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+}
+
+td img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+tbody tr:hover td,tbody tr:hover th {
+    background: var(--dim);
+}
+
+code {
+    font-size: 110%;
+    padding: 1px 2px;
+    background: var(--dim);
+}
+
+pre {
+    margin: 1em 0 0;
+}
+
+td pre {
+    margin: 0;
+}
+
+pre,textarea {
+    font: 110%/1.25 monospace;
+}
+
+pre.jush {
+    background: var(--bg);
+}
+
+pre code {
+    display: block;
+    font-size: 100%;
+}
+
+input,textarea {
+    box-sizing: border-box;
+}
+
+input,select {
+    vertical-align: middle;
+}
+
+input[type="radio"] {
+    vertical-align: text-bottom;
+}
+
+input.default {
+    box-shadow: 1px 1px 1px #777;
+}
+
+input.required,input.maxlength {
+    box-shadow: 1px 1px 1px red;
+}
+
+input.wayoff {
+    left: -1000px;
+    position: absolute;
+}
+
+.block {
+    display: block;
+}
+
+.version {
+    color: #777;
+    font-size: 62%;
+}
+
+.js .hidden,.nojs .jsonly {
+    display: none;
+}
+
+.js .column {
+    position: absolute;
+    background: var(--lit);
+    padding: .27em 1ex .33em 0;
+    margin-top: -.37em;
+    border-width: 1px 1px 1px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.nowrap td,.nowrap th,td.nowrap,p.nowrap {
+    white-space: pre;
+}
+
+.wrap td {
+    white-space: normal;
+}
+
+.error {
+    color: red;
+    background: #fee;
+}
+
+.error b {
+    background: var(--bg);
+    font-weight: normal;
+}
+
+.message {
+    color: green;
+    background: #efe;
+}
+
+.message table {
+    color: var(--fg);
+    background: var(--bg);
+}
+
+.error,.message {
+    padding: .5em .8em;
+    margin: 1em 20px 0 0;
+}
+
+.char {
+    color: #007F00;
+}
+
+.date {
+    color: #7F007F;
+}
+
+.enum {
+    color: #007F7F;
+}
+
+.binary {
+    color: red;
+}
+
+.odds tbody tr:nth-child(2n) {
+    background: #F5F5F5;
+}
+
+.js .checkable .checked td,.js .checkable .checked th {
+    background: var(--lit);
+}
+
+.time {
+    color: silver;
+    font-size: 70%;
+}
+
+.function,.number,.datetime {
+    text-align: right;
+}
+
+.type {
+    width: 15ex;
+}
+
+.options select,.options input {
+    width: 20ex;
+}
+
+.view {
+    font-style: italic;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.sqlarea {
+    width: 98%;
+}
+
+.sql-footer {
+    margin-bottom: 2.5em;
+}
+
+.explain table {
+    white-space: pre;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    background: navy center no-repeat;
+    border: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.icon span {
+    display: none;
+}
+
+.icon:hover {
+    background-color: red;
+}
+
+.size {
+    width: 7ex;
+}
+
+.help {
+    cursor: help;
+}
+
+.footer {
+    position: sticky;
+    bottom: 0;
+    margin: 23px -20px .5em 0;
+    box-shadow: 0 -5px 10px 10px var(--bg);
+}
+
+.footer > div {
+    background: var(--bg);
+    padding: 0 0 .5em;
+}
+
+.footer fieldset {
+    margin-top: 0;
+}
+
+.links a {
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.logout {
+    margin-top: .5em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--bg);
+    box-shadow: 0 0 5px 5px var(--bg);
+}
+
+.loadmore {
+    margin-left: 1ex;
+}
+
+#menu {
+    position: absolute;
+    margin: 10px 0 0;
+    top: 2em;
+    left: 0;
+    width: 19em;
+}
+
+#menu p,#logins,#tables {
+    padding: .8em 1em;
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+#logins li,#tables li {
+    list-style: none;
+}
+
+#dbs {
+    overflow: hidden;
+}
+
+#logins,#tables {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#logins a,#tables a,#tables span {
+    background: var(--bg);
+}
+
+#content {
+    margin: 2em 0 0 21em;
+    padding: 10px 20px 20px 0;
+}
+
+#lang {
+    position: absolute;
+    top: -2.6em;
+    left: 0;
+    padding: .3em 1em;
+}
+
+#menuopen {
+    display: none;
+}
+
+#breadcrumb {
+    white-space: nowrap;
+    position: absolute;
+    top: 0;
+    left: 21em;
+    background: var(--dim);
+    height: 2em;
+    line-height: 1.8em;
+    padding: 0 1em;
+    margin: 0 0 0 -18px;
+}
+
+#logo {
+    vertical-align: baseline;
+    margin-bottom: -3px;
+}
+
+#h1 {
+    color: #777;
+    text-decoration: none;
+    font-style: italic;
+}
+
+#version {
+    color: red;
+}
+
+#schema {
+    margin-left: 60px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#schema .table {
+    border: 1px solid silver;
+    padding: 0 2px;
+    cursor: move;
+    position: absolute;
+}
+
+#schema .references {
+    position: absolute;
+}
+
+#help {
+    position: absolute;
+    border: 1px solid #999;
+    background: var(--dim);
+    padding: 5px;
+    font-family: monospace;
+    z-index: 1;
+}
+
+:target {
+    background: var(--lit);
+}
+
+.icon-up {
+    background-image: url(data:image/gif;base64,R0lGODlhEgASAIEAMe7u7gAAgJmZmQAAACH5BAEAAAEALAAAAAASABIAAQIghI+py+0PTQhRTgrvfRP0nmEVOIoReZphxbauAMfyHBcAOw==);
+}
+
+.icon-down {
+    background-image: url(data:image/gif;base64,R0lGODlhEgASAIEAMe7u7gAAgJmZmQAAACH5BAEAAAEALAAAAAASABIAAQIghI+py+0PTQjxzCopvltX/lyix0wm2ZwdxraVAMfyHBcAOw==);
+}
+
+.icon-plus {
+    background-image: url(data:image/gif;base64,R0lGODlhEgASAIEAMe7u7gAAgJmZmQAAACH5BAEAAAEALAAAAAASABIAAQIhhI+py+0PTQjxzCopvm/6rykgCHGVGaFliLXuI8TyTMsFADs=);
+}
+
+.icon-cross {
+    background-image: url(data:image/gif;base64,R0lGODlhEgASAIEAMe7u7gAAgJmZmQAAACH5BAEAAAEALAAAAAASABIAAQIjhI+py+0PIwph1kZvfnnDLoFfd2GU4THnsUruC0fCTNc2XQAAOw==);
+}
+
+.icon-move {
+    background-image: url(data:image/gif;base64,R0lGODlhEgASAJEAAO7u7gAAAJmZmQAAACH5BAEAAAEALAAAAAASABIAAAIfhI+py+3vgpyU0Rug3gnX5U3cqIWSZZLqigjuC8dvAQA7);
+}
+
+#schema .arrow {
+    height: 1.25em;
+    background: url(data:image/gif;base64,R0lGODlhCAAKAIAAAICAgP///yH5BAEAAAEALAAAAAAIAAoAAAIPBIJplrGLnpQRqtOy3rsAADs=) no-repeat right center;
+}
+
+.rtl h2 {
+    margin: 0 -18px 20px 0;
+}
+
+.rtl p,.rtl table,.rtl .error,.rtl .message {
+    margin: 1em 0 0 20px;
+}
+
+.rtl .logout {
+    left: 0;
+    right: auto;
+}
+
+.rtl #content {
+    margin: 2em 21em 0 0;
+    padding: 10px 0 20px 20px;
+}
+
+.rtl #breadcrumb {
+    left: auto;
+    right: 21em;
+    margin: 0 -18px 0 0;
+}
+
+.rtl .pages {
+    left: auto;
+    right: 21em;
+}
+
+.rtl input.wayoff {
+    left: auto;
+    right: -1000px;
+}
+
+.rtl #lang,.rtl #menu {
+    left: auto;
+    right: 0;
+}
+
+.rtl pre,.rtl code {
+    direction: ltr;
+}
+
+@media all and (max-width: 800px) {
+    .pages {
+        left:auto;
+    }
+
+    .js .logout {
+        top: 1.667em;
+        background-color: var(--dim);
+        box-shadow: 0 0 5px 5px var(--dim);
+    }
+
+    #menu {
+        position: static;
+        width: auto;
+        min-width: 23em;
+        background: var(--bg);
+        border: 1px solid var(--fg);
+        margin-top: 9px;
+        box-shadow: 0 0 20px -3px var(--fg);
+    }
+
+    #content {
+        margin-left: 10px !important;
+    }
+
+    #lang {
+        position: static;
+    }
+
+    #breadcrumb {
+        left: 48px !important;
+    }
+
+    .js #foot {
+        position: absolute;
+        top: 2em;
+        left: 0;
+    }
+
+    .js .foot {
+        display: none;
+    }
+
+    .js #menuopen {
+        display: block;
+        position: absolute;
+        top: 3px;
+        left: 6px;
+    }
+
+    .nojs #menu {
+        position: static;
+    }
+
+    .rtl .pages {
+        right: auto;
+    }
+
+    .rtl #content {
+        margin-right: 10px;
+    }
+
+    .rtl #breadcrumb {
+        right: auto;
+    }
+}
+
+@media print {
+    #lang,#menu {
+        display: none;
+    }
+
+    #content {
+        margin-left: 1em;
+    }
+
+    #breadcrumb {
+        left: 1em;
+    }
+
+    .nowrap td,.nowrap th,td.nowrap {
+        white-space: normal;
+    }
+}
+
+.jush {
+    --text-color: #000;
+    --bg-color: #fff;
+    --php-color: #003;
+    --string-color: green;
+    --string-plain-color: #009F00;
+    --keyword-color: navy;
+    --identifier-color: red;
+    --value-color: purple;
+    --number-color: #007F7F;
+    --attribute-color: teal;
+    --js-bg-color: #f0f0ff;
+    --css-bg-color: #ffffe0;
+    --php-bg-color: #fff0f0;
+    --php-sql-bg-color: #ffbbb0;
+}
+
+.jush {
+    color: var(--text-color);
+}
+
+.jush-htm_com,.jush-com,.jush-com_code,.jush-one,.jush-php_doc,.jush-php_com,.jush-php_one,.jush-js_one,.jush-js_doc {
+    color: gray;
+}
+
+.jush-php,.jush-php_new,.jush-php_fun {
+    color: var(--php-color);
+    background-color: var(--php-bg-color);
+}
+
+.jush-php_quo,.jush-quo,.jush-quo_one,.jush-php_eot,.jush-apo,.jush-sql_apo,.jush-sqlite_apo,.jush-sql_quo,.jush-sql_eot {
+    color: var(--string-color);
+}
+
+.jush-php_apo {
+    color: var(--string-plain-color);
+}
+
+.jush-php_quo_var,.jush-php_var,.jush-sql_var {
+    font-style: italic;
+}
+
+.jush-php_apo .jush-php_quo_var,.jush-php_apo .jush-php_var {
+    font-style: normal;
+}
+
+.jush-php_halt2 {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.jush-tag_css,.jush-att_css .jush-att_quo,.jush-att_css .jush-att_apo,.jush-att_css .jush-att_val {
+    color: var(--text-color);
+    background-color: var(--css-bg-color);
+}
+
+.jush-tag_js,.jush-att_js .jush-att_quo,.jush-att_js .jush-att_apo,.jush-att_js .jush-att_val,.jush-css_js {
+    color: var(--text-color);
+    background-color: var(--js-bg-color);
+}
+
+.jush-tag,.jush-xml_tag {
+    color: var(--keyword-color);
+}
+
+.jush-att,.jush-xml_att,.jush-att_js,.jush-att_css,.jush-att_http {
+    color: var(--attribute-color);
+}
+
+.jush-att_quo,.jush-att_apo,.jush-att_val {
+    color: var(--value-color);
+}
+
+.jush-ent {
+    color: var(--value-color);
+}
+
+.jush-js_key,.jush-js_key .jush-quo,.jush-js_key .jush-apo {
+    color: var(--value-color);
+}
+
+.jush-js_reg {
+    color: var(--keyword-color);
+}
+
+.jush-php_sql .jush-php_quo,.jush-php_sql .jush-php_apo,.jush-php_sqlite .jush-php_quo,.jush-php_sqlite .jush-php_apo,.jush-php_pgsql .jush-php_quo,.jush-php_pgsql .jush-php_apo,.jush-php_mssql .jush-php_quo,.jush-php_mssql .jush-php_apo,.jush-php_oracle .jush-php_quo,.jush-php_oracle .jush-php_apo {
+    background-color: var(--php-sql-bg-color);
+}
+
+.jush-bac,.jush-php_bac,.jush-bra,.jush-mssql_bra,.jush-sqlite_quo {
+    color: var(--identifier-color);
+}
+
+.jush-num,.jush-clr {
+    color: var(--number-color);
+}
+
+.jush a {
+    color: var(--keyword-color);
+}
+
+.jush a.jush-help {
+    cursor: help;
+}
+
+.jush-sql a,.jush-sql_code a,.jush-sqlite a,.jush-pgsql a,.jush-mssql a,.jush-oracle a,.jush-simpledb a {
+    font-weight: bold;
+}
+
+.jush-php_sql .jush-php_quo a,.jush-php_sql .jush-php_apo a {
+    font-weight: normal;
+}
+
+.jush-tag a,.jush-att a,.jush-apo a,.jush-quo a,.jush-php_apo a,.jush-php_quo a,.jush-php_eot2 a {
+    color: inherit;
+}
+
+a.jush-custom:link,a.jush-custom:visited {
+    font-weight: normal;
+    color: inherit;
+}
+
+.jush p {
+    margin: 0;
+}

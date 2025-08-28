@@ -10,7 +10,7 @@
 dev_tools/*
 !dev_tools/docker-compose.yml
 !dev_tools/README.md
-!dev_tools/adminer.css
+!dev_tools/*.css
 
 # Always ignore .env
 .env

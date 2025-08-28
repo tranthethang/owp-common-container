@@ -1,263 +1,457 @@
+/* Adminer CSS - Gruvbox Dark Soft Theme */
+/* Palette: https://github.com/morhetz/gruvbox */
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&display=swap');
+:root {
+  /* Backgrounds (Dark Soft) */
+  --bg:  #3c3836;
+  --bg0: #32302f; /* dark soft base */
+  --bg1: #3c3836;
+  --bg2: #504945;
+  --bg3: #665c54;
+  --bg4: #7c6f64; /* borders */
+
+  /* Foregrounds */
+  --fg0: #ebdbb2; /* primary text */
+  --fg1: #d5c4a1;
+  --fg2: #bdae93;
+  --fg3: #a89984;
+
+  /* Accents */
+  --red:    #fb4934;
+  --green:  #b8bb26;
+  --yellow: #fabd2f;
+  --blue:   #83a598;
+  --purple: #d3869b;
+  --aqua:   #8ec07c;
+  --orange: #fe8019;
+  --gray:   #928374;
+
+  /* JUSH keyword override for better readability */
+  --keyword-color: var(--purple);
+
+  /* Helpers */
+  --row-hover: color-mix(in srgb, var(--bg1) 50%, var(--bg0));
+  --checked-bg: color-mix(in srgb, var(--red) 12%, var(--bg0));
+  --radius: 4px;
+}
+
+/* Global reset and typography */
 * {
-	font: 11px/1.25 Verdana, 'Geneva CE', lucida, sans-serif;
-	color:#333333;
-	margin:0px;
-	padding:0px;
+  box-sizing: border-box;
+  font: 13px/1.35 'Dosis', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--fg0);
+  margin: 0;
+  padding: 0;
 }
 
-a,a:visited {
-	/* color:#0033ff; */
-	text-decoration:none;
-	padding:3px 1px;
+/* Base layout */
+html, body {
+  background: var(--bg0);
+  color: var(--fg0);
 }
 
-#content table thead span, #content table thead a {
-	font-weight:bold;
-	color:black;
+/* Links */
+a, a:visited {
+  color: var(--blue);
+  text-decoration: none;
+  padding: 3px 1px;
 }
 
-#content table thead a:hover {
-	background:none;
-	text-decoration:underline;
-	color:black;
-}
-
+a:link:hover,
+a:visited:hover,
 a:hover {
-	color:white;
-	/* background:#0033ff; */
+  color: var(--orange);
+  text-decoration: underline;
+  background: transparent;
 }
 
+/* Headings */
 h1 {
-	font-size:1.5em;
-	line-height: 2em;
-	font-weight:bold;
-	background:white;
-	color:#1e5eb6;
-	border-bottom:1px solid #f4f4f4;
-
-	padding:20px;
-	margin:0px;
+  font-size: 1.5em;
+  line-height: 2em;
+  font-weight: bold;
+  background: var(--bg0);
+  color: var(--yellow);
+  border-bottom: 1px solid var(--bg2);
+  padding: 20px;
+  margin: 0;
 }
 
 #menu h1 {
-	padding:0px 0px 5px 20px;
-	background:none;
+  padding: 0 0 5px 20px;
+  background: none;
 }
 
-h2,h3 {
-	font-size:1.5em;
-	font-weight:normal;
-	background:white;
-	color:#A0522D;
-	border-bottom:1px solid #f4f4f4;
-	padding:5px 0px;
-	margin:0px;
+h2, h3 {
+  font-size: 1.5em;
+  font-weight: normal;
+  background: var(--bg0);
+  color: var(--orange);
+  border-bottom: 1px solid var(--bg2);
+  padding: 5px 0;
+  margin: 0;
 }
 
+/* Forms */
 fieldset {
-	padding:5px;
-	border:1px solid #d0cdc4;
-	background:#fcfaf5;
+  padding: 5px;
+  border: 1px solid var(--bg3);
+  background: var(--bg1);
 }
 
-input,select,textarea {
-	border:1px solid #e5e5e5;
-	margin:1px;
-	padding:3px;
-	border-radius: 3px;
+input, select, textarea {
+  background: var(--bg0);
+  color: var(--fg0);
+  border: 1px solid var(--bg3);
+  margin: 1px;
+  padding: 3px;
+  border-radius: var(--radius);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--aqua);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--aqua) 30%, transparent);
 }
 
 input[type=submit] {
-	color:white;
-	background:#A0522D;
-	padding:3px 10px;
-	cursor:pointer;
-	border:0px solid;
-	border-radius: 3px;
+  color: var(--fg0); /* light text on accent */
+  background: var(--blue);
+  padding: 3px 10px;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius);
 }
 
-input[type=submit]:hover{
-	background:blue;
+input[type=submit]:hover {
+  background: var(--aqua);
 }
 
-input[type=checkbox]{
-	margin-right:5px;
+input[type=checkbox] {
+  margin-right: 5px;
 }
 
 input[type=image] {
-	border:1px solid #d0cdc4;
+  border: 1px solid var(--bg3);
 }
 
-input[type=checkbox],input[type=radio]{
-	border:1px solid #e5e5e5;
-	padding:2px 5px;
+input[type=checkbox], input[type=radio] {
+  border: 1px solid var(--bg3);
+  padding: 2px 5px;
 }
 
-code{
-	background:#f0ffe1;
-	border:1px dashed #d5f1b9;
-	padding:2px 4px;
-	font-family:"Courier New";
-}
-code a:hover{background:transparent}
-
-table{
-	margin:10px 0px;
-	border:1px solid #d0cdc4;
-	border-collapse:collapse;
+/* Code blocks */
+code {
+  background: var(--bg1);
+  border: 1px dashed var(--aqua);
+  padding: 2px 4px;
+  font-family: "Courier New", monospace;
+  color: var(--fg1);
 }
 
-tbody tr:hover td,tbody tr:hover th{
-	background:#edf4ff
+code a:hover {
+  background: transparent;
 }
 
-thead{
-	top: 44px;
+/* Tables */
+table {
+  margin: 10px 0;
+  border: 1px solid var(--bg3);
+  border-collapse: collapse;
+  background: var(--bg0);
+}
+
+tbody tr:hover td, tbody tr:hover th {
+  background: var(--row-hover);
+}
+
+thead {
+  top: 44px;
 }
 
 thead th, thead td {
-	text-align:center;
-	vertical-align:middle;
-	font-weight:bold;
-	white-space:nowrap;
-	background:#f2eee1;
-	color:#808080;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  white-space: nowrap;
+  background: var(--bg1);
+  color: var(--fg1);
 }
 
-th,td{
-	border:1px solid #d0cdc4;
-	padding:1px 4px;
-	vertical-align:middle;
+th, td {
+  border: 1px solid var(--bg3);
+  padding: 1px 4px;
+  vertical-align: middle;
 }
 
 th a {
-	font-weight:bold;
-	padding-bottom:0px;
+  font-weight: bold;
+  padding-bottom: 0;
 }
 
 th {
-	background:white;
+  background: var(--bg0);
 }
 
 .odds tbody tr:nth-child(2n) {
-	background:#fcfaf5;
+  background: var(--bg1);
 }
 
 #content tbody tr.checked td, .odds tbody tr.checked:nth-child(2n) td {
-	background:#fbe2e2;
-	color:red;
+  background: var(--checked-bg);
+  color: var(--red);
 }
 
-.hidden{
-	display:none
+.hidden {
+  display: none;
 }
 
-.error,.message{
-	padding:0px;
-	background:transparent;
-	font-weight:bold
+/* Messages */
+.error, .message {
+  padding: 0;
+  background: transparent;
+  font-weight: bold;
 }
 
-.error{
-	color:#c00
-}
+.error { color: var(--red); }
+.message { color: var(--green); }
 
-.message{
-	color:#090
-}
-
-#content{
-	margin:0px 0px 0px 255px;
-	padding:50px 20px 40px 0px;
-	height:100%;
+/* Content & layout blocks */
+#content {
+  margin: 0 0 0 255px;
+  padding: 50px 20px 40px 0;
+  height: 100%;
 }
 
 #lang {
-	background:#f2eee1;
-	color:#808080;
-	position:fixed;
-	top:0px;
-	left:0px;
-	width:100%;
-	padding:10px 20px;
-	z-index:1;
+  background: var(--bg1);
+  color: var(--fg1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  z-index: 1;
 }
 
 #breadcrumb {
-	position:fixed;
-	top:0px;
-	left:260px;
-	background:#f2eee1;
-	z-index:2;
-	width:100%;
-	padding:10px;
+  position: fixed;
+  top: 0;
+  left: 260px;
+  background: var(--bg1);
+  color: var(--fg1);
+  z-index: 2;
+  width: 100%;
+  padding: 10px;
 }
 
 #menu {
-	background:#fcfaf5;
-	position:fixed;
-	top:-10px;
-	padding:0px;
-	padding-top:10px;
-	bottom:0px;
-	overflow:auto;
-	left:0px;
-	width:240px;
-	border-right:5px solid #f2eee1;
+  background: var(--bg0);
+  position: fixed;
+  top: -10px;
+  padding: 0;
+  padding-top: 10px;
+  bottom: 0;
+  overflow: auto;
+  left: 0;
+  width: 240px;
+  border-right: 5px solid var(--bg2);
 }
 
 #schema .table {
-	padding:5px;
-	background:#fcfaf5;
-	border:1px solid #d0cdc4;
+  padding: 5px;
+  background: var(--bg1);
+  border: 1px solid var(--bg3);
 }
 
 #schema .table b {
-	color:#0033ff;
-	font-weight:bold;
-	text-decoration:underline;
+  color: var(--blue);
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 #schema .table b:hover {
-	color:white;
+  color: var(--bg0); /* inverted on blue for contrast */
+  background: var(--blue);
 }
 
 #logout {
-	color:#fce2e2;
-	background:#d73e3e;
+  color: var(--fg0);
+  background: var(--red);
 }
 
 #logout:hover {
-	background:#ea0202;
+  background: #9d0006; /* darker red */
 }
 
 #logins a, #tables a {
-	background:none;
+  background: none;
 }
 
 #logins a:hover, #tables a:hover {
-	/* background:#A0522D; */
-	color:#A0522D;
+  color: var(--orange);
 }
 
 .logout {
-	z-index: 2;
-	background-color: #f2eee1;
-	box-shadow: 0 0 5px 5px #f2eee1;
+  z-index: 2;
+  background-color: var(--bg1);
+  box-shadow: 0 0 5px 5px var(--bg1);
 }
 
 .js .column {
-	background:#f2eee1;
+  background: var(--bg1);
 }
 
 #content table thead a.text:hover {
-	text-decoration:none;
+  text-decoration: none;
 }
 
 #version, .version {
-	font-size:50%;
+  font-size: 50%;
+  color: var(--fg2);
 }
 
 #h1:hover {
-	color:white;
+  color: var(--bg0);
+}
+
+/* SQL code blocks (Adminer JUSH) */
+code.jush-sql,
+pre.jush code.jush-sql {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
+  background: var(--bg1) !important;
+  color: var(--fg1) !important; /* force over default.css */
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  line-height: 1.5;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* Ensure keywords use the configured variable color */
+}
+
+/* Reset link styling inside SQL blocks */
+code.jush-sql a {
+  padding: 0;
+  text-decoration: none;
+  background: transparent;
+}
+
+/* SQL keywords (SELECT, FROM, LIMIT...) are links (jush-help) */
+code.jush-sql a.jush-help {
+  color: var(--keyword-color) !important;
+  font-weight: 600; /* softer weight */
+}
+code.jush-sql a.jush-help:hover {
+  color: color-mix(in srgb, var(--keyword-color) 70%, var(--yellow));
+  text-decoration: underline;
+}
+
+/* High-specificity duplication to beat default.css if it loads after */
+html body code.jush-sql a.jush-help,
+html body pre.jush code.jush-sql a.jush-help {
+  color: var(--keyword-color) !important;
+}
+
+/* Identifiers (tables, columns) */
+code.jush-sql a.jush-custom {
+  color: var(--blue) !important;
+  font-weight: 600;
+}
+
+/* Generic JUSH anchor keywords fallback */
+.jush a {
+  color: var(--keyword-color);
+}
+code.jush-sql a.jush-custom:hover {
+  color: var(--aqua);
+  text-decoration: underline;
+}
+
+/* Numbers */
+code.jush-sql .jush-num {
+  color: var(--aqua);
+}
+
+/* Strings and quoted */
+code.jush-sql .jush-sql_quo,
+code.jush-sql .jush-sql_apo,
+code.jush-sql .jush-sql_eot {
+  color: var(--green);
+}
+
+/* Variables */
+code.jush-sql .jush-sql_var {
+  font-style: italic;
+  color: var(--purple);
+}
+
+/* Operators and punctuation */
+code.jush-sql .jush-op {
+  color: color-mix(in srgb, var(--orange) 70%, var(--fg1)) !important; /* soften operators */
+}
+
+/* Backticks around identifiers */
+code.jush-sql .jush-bac .jush-op {
+  color: var(--gray);
+}
+
+/* Comments */
+code.jush-sql .jush-sql_com,
+code.jush-sql .jush-com {
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* Wrapper */
+code.jush-sql .jush-sql_code {
+  color: var(--fg1) !important;
+}
+
+/* Scrollbar theming to match Gruvbox Dark */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg3) var(--bg0); /* thumb track */
+}
+
+/* Chromium/WebKit */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--bg0);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--bg3);
+  border-radius: 8px;
+  border: 2px solid var(--bg0);
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--bg4);
+}
+
+/* Make scrollbars inside code blocks slightly more visible */
+pre, code, .column, #menu, #content, textarea {
+  scrollbar-color: var(--bg4) var(--bg0);
+}
+
+/* Ensure our JUSH variables override default.css even if it loads later */
+html body .jush,
+html body .jush-sql {
+  --keyword-color: var(--purple) !important;
+}
+
+/* Make the container match dark theme so light bg doesn't leak from default.css */
+html body pre.jush {
+  background: var(--bg1) !important;
+  color: var(--fg1);
+  border: 1px solid var(--bg3);
+}
+
+#menu p, #logins, #tables {
+  border-bottom: 1px solid var(--bg2);
 }

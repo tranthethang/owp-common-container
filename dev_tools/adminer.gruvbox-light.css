@@ -1,0 +1,313 @@
+/* Adminer CSS - Gruvbox Light Theme */
+/* Palette: https://github.com/morhetz/gruvbox */
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700&display=swap');
+:root {
+  --bg: #f9f5d7;
+  /* Backgrounds (Light Hard) */
+  --bg0: #f9f5d7; /* lightest background - light hard */
+  --bg1: #ebdbb2;
+  --bg2: #d5c4a1;
+  --bg3: #bdae93;
+  --bg4: #a89984; /* borders */
+
+  /* Foregrounds */
+  --fg0: #3c3836; /* primary text */
+  --fg1: #504945;
+  --fg2: #665c54;
+  --fg3: #7c6f64;
+
+  /* Accents */
+  --red:    #cc241d;
+  --green:  #98971a;
+  --yellow: #d79921;
+  --blue:   #458588;
+  --purple: #b16286;
+  --aqua:   #689d6a;
+  --orange: #d65d0e;
+  --gray:   #928374;
+
+  /* Helpers */
+  --row-hover: var(--bg1);
+  --checked-bg: #f2e5e3; /* subtle red-tint background */
+  --radius: 4px;
+}
+
+/* Global reset and typography */
+* {
+  box-sizing: border-box;
+  font: 12px/1.35 'Dosis', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+  color: var(--fg0);
+  margin: 0;
+  padding: 0;
+}
+
+/* Base layout */
+html, body {
+  background: var(--bg0);
+  color: var(--fg0);
+}
+
+/* Links */
+a, a:visited {
+  color: var(--blue);
+  text-decoration: none;
+  padding: 3px 1px;
+}
+
+a:link:hover,
+a:visited:hover,
+a:hover {
+  color: var(--orange);
+  text-decoration: underline;
+  background: transparent;
+}
+
+/* Headings */
+h1 {
+  font-size: 1.5em;
+  line-height: 2em;
+  font-weight: bold;
+  background: var(--bg0);
+  color: var(--blue);
+  border-bottom: 1px solid var(--bg1);
+  padding: 20px;
+  margin: 0;
+}
+
+#menu h1 {
+  padding: 0 0 5px 20px;
+  background: none;
+}
+
+h2, h3 {
+  font-size: 1.5em;
+  font-weight: normal;
+  background: var(--bg0);
+  color: var(--orange);
+  border-bottom: 1px solid var(--bg1);
+  padding: 5px 0;
+  margin: 0;
+}
+
+/* Forms */
+fieldset {
+  padding: 5px;
+  border: 1px solid var(--bg3);
+  background: var(--bg1);
+}
+
+input, select, textarea {
+  background: var(--bg0);
+  color: var(--fg0);
+  border: 1px solid var(--bg3);
+  margin: 1px;
+  padding: 3px;
+  border-radius: var(--radius);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--aqua);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--aqua) 30%, transparent);
+}
+
+input[type=submit] {
+  color: var(--bg0);
+  background: var(--blue);
+  padding: 3px 10px;
+  cursor: pointer;
+  border: 0;
+  border-radius: var(--radius);
+}
+
+input[type=submit]:hover {
+  background: var(--aqua);
+}
+
+input[type=checkbox] {
+  margin-right: 5px;
+}
+
+input[type=image] {
+  border: 1px solid var(--bg3);
+}
+
+input[type=checkbox], input[type=radio] {
+  border: 1px solid var(--bg3);
+  padding: 2px 5px;
+}
+
+/* Code blocks */
+code {
+  background: var(--bg1);
+  border: 1px dashed var(--aqua);
+  padding: 2px 4px;
+  font-family: "Courier New", monospace;
+  color: var(--fg1);
+}
+
+code a:hover {
+  background: transparent;
+}
+
+/* Tables */
+table {
+  margin: 10px 0;
+  border: 1px solid var(--bg3);
+  border-collapse: collapse;
+  background: var(--bg0);
+}
+
+tbody tr:hover td, tbody tr:hover th {
+  background: var(--row-hover);
+}
+
+thead {
+  top: 44px;
+}
+
+thead th, thead td {
+  text-align: center;
+  vertical-align: middle;
+  font-weight: bold;
+  white-space: nowrap;
+  background: var(--bg1);
+  color: var(--fg2);
+}
+
+th, td {
+  border: 1px solid var(--bg3);
+  padding: 1px 4px;
+  vertical-align: middle;
+}
+
+th a {
+  font-weight: bold;
+  padding-bottom: 0;
+}
+
+th {
+  background: var(--bg0);
+}
+
+.odds tbody tr:nth-child(2n) {
+  background: var(--bg1);
+}
+
+#content tbody tr.checked td, .odds tbody tr.checked:nth-child(2n) td {
+  background: var(--checked-bg);
+  color: var(--red);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Messages */
+.error, .message {
+  padding: 0;
+  background: transparent;
+  font-weight: bold;
+}
+
+.error { color: var(--red); }
+.message { color: var(--green); }
+
+/* Content & layout blocks */
+#content {
+  margin: 0 0 0 255px;
+  padding: 50px 20px 40px 0;
+  height: 100%;
+}
+
+#lang {
+  background: var(--bg1);
+  color: var(--fg2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  z-index: 1;
+}
+
+#breadcrumb {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  background: var(--bg1);
+  color: var(--fg2);
+  z-index: 2;
+  width: 100%;
+  padding: 10px;
+}
+
+#menu {
+  background: var(--bg0);
+  position: fixed;
+  top: -10px;
+  padding: 0;
+  padding-top: 10px;
+  bottom: 0;
+  overflow: auto;
+  left: 0;
+  width: 240px;
+  border-right: 5px solid var(--bg1);
+}
+
+#schema .table {
+  padding: 5px;
+  background: var(--bg1);
+  border: 1px solid var(--bg3);
+}
+
+#schema .table b {
+  color: var(--blue);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#schema .table b:hover {
+  color: var(--bg0);
+  background: var(--blue);
+}
+
+#logout {
+  color: var(--bg0);
+  background: var(--red);
+}
+
+#logout:hover {
+  background: #9d0006; /* darker red */
+}
+
+#logins a, #tables a {
+  background: none;
+}
+
+#logins a:hover, #tables a:hover {
+  color: var(--orange);
+}
+
+.logout {
+  z-index: 2;
+  background-color: var(--bg1);
+  box-shadow: 0 0 5px 5px var(--bg1);
+}
+
+.js .column {
+  background: var(--bg1);
+}
+
+#content table thead a.text:hover {
+  text-decoration: none;
+}
+
+#version, .version {
+  font-size: 50%;
+  color: var(--fg2);
+}
+
+#h1:hover {
+  color: var(--bg0);
+}
