@@ -197,6 +197,43 @@ services:
             redis:
                 condition: service_healthy
 
+    ollama:
+        container_name: dev_ollama
+        image: ollama/ollama:latest
+        profiles: ["ai", "ollama", "all"]
+        restart: '${RESTART_POLICY:-always}'
+        ports:
+            - '${OLLAMA_PORT:-11434}:11434'
+        networks:
+            - dev_tools
+        volumes:
+            - ollama_data:/root/.ollama
+        healthcheck:
+            test: ["CMD", "ollama", "list"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        entrypoint: ["/bin/sh", "-lc", "ollama serve & until ollama list >/dev/null 2>&1; do sleep 1; done; ollama pull ${OLLAMA_MODEL:-gemma:7b}; wait"]
+
+    anythingllm:
+        container_name: dev_anythingllm
+        image: mintplexlabs/anythingllm:pg
+        profiles: ["ai", "anythingllm", "all"]
+        restart: '${RESTART_POLICY:-always}'
+        environment:
+            - STORAGE_DIR=${ANYTHINGLLM_STORAGE_DIR:-/app/server/storage}
+            - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434}
+            - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeme}@postgres:${POSTGRES_PORT:-5432}/${ANYTHINGLLM_DB_NAME:-anythingllm}
+        ports:
+            - '${ANYTHINGLLM_PORT:-3030}:3001'
+        networks:
+            - dev_tools
+        volumes:
+            - anythingllm_data:/app/server/storage
+        depends_on:
+            ollama:
+                condition: service_healthy
+
     sonarqube:
         container_name: dev_sonarqube
         image: sonarqube:lts-community
@@ -245,3 +282,5 @@ volumes:
     portainer_data:
     minio_data:
     redisinsight_data:
+    ollama_data:
+    anythingllm_data:
